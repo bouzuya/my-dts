@@ -1,5 +1,3 @@
-declare module '@cycle/core' {
-  var run: any;
-  export { run };
-}
+var run: any;
+export { run };
 
