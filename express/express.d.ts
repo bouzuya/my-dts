@@ -1,4 +1,4 @@
 declare module 'express' {
-  var express: any;
-  export default express;
-};
+  var e: any;
+  export default e;
+}
