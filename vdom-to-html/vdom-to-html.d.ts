@@ -1,4 +1,4 @@
 declare module 'vdom-to-html' {
-  var v: any;
-  export default v;
+  var vdomToHTML: (vtree: any) => string;
+  export default vdomToHTML;
 }
