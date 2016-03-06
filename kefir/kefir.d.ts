@@ -20,10 +20,10 @@ declare module "kefir" {
     offAny(callback: (event: Event<T | S>) => void): void;
     log(name?: string): void;
     offLog(name?: string): void;
-    flatten<U>(transformer?: (value: T) => U[]): Stream<U, S>;
     toPromise(PromiseConstructor?: any): any;
     toESObservable(): any;
 
+    // Modify an Observable
     map<U>(fn: (value: T) => U): Observable<U, S>;
     filter(predicate?: (value: T) => boolean): Observable<T, S>;
     take(n: number): Observable<T, S>;
@@ -34,6 +34,7 @@ declare module "kefir" {
     skipDuplicates(comparator?: (a: T, b: T) => boolean): Observable<T, S>;
     diff(fn?: (prev: T, next: T) => T, seed?: T): Observable<T, S>;
     scan(fn: (prev: T, next: T) => T, seed?: T): Observable<T, S>;
+    flatten<U>(transformer?: (value: T) => U[]): Observable<U, S>;
     delay(wait: number): Observable<T, S>;
     throttle(wait: number, options?: {leading?: boolean, trailing?: boolean}): Observable<T, S>;
     debounce(wait: number, options?: {immediate: boolean}): Observable<T, S>;
@@ -55,16 +56,16 @@ declare module "kefir" {
     withHandler<U, V>(handler: (emitter: Emitter<T, S>, event: Event<T | S>) => void): Observable<U, S>;
 
     // Combine properties
-    combine<U, V, W>(otherObs: Property<U, V>, combinator?: (value: T, ...values: U[]) => W): Observable<W, S | V>;
-    zip<U, V, W>(otherObs: Property<U, V>, combinator?: (value: T, ...values: U[]) => W): Observable<W, S | V>;
-    merge<U, V>(otherObs: Property<U, V>): Observable<T | U, S | V>;
-    concat<U, V>(otherObs: Property<U, V>): Observable<T | U, S | V>;
-    flatMap<U, V>(transform: (value: T) => Property<U, V>): Observable<U, V>;
-    flatMapLatest<U, V>(fn: (value: T) => Property<U, V>): Observable<U, V>;
-    flatMapFirst<U, V>(fn: (value: T) => Property<U, V>): Observable<U, V>;
-    flatMapConcat<U, V>(fn: (value: T) => Property<U, V>): Observable<U, V>;
-    flatMapConcurLimit<U, V>(fn: (value: T) => Property<U, V>, limit: number): Observable<U, V>;
-    flatMapErrors<U, V>(transform: (error: S) => Property<U, V>): Observable<U, V>;
+    combine<U, V, W>(otherObs: Observable<U, V>, combinator?: (value: T, ...values: U[]) => W): Observable<W, S | V>;
+    zip<U, V, W>(otherObs: Observable<U, V>, combinator?: (value: T, ...values: U[]) => W): Observable<W, S | V>;
+    merge<U, V>(otherObs: Observable<U, V>): Observable<T | U, S | V>;
+    concat<U, V>(otherObs: Observable<U, V>): Observable<T | U, S | V>;
+    flatMap<U, V>(transform: (value: T) => Observable<U, V>): Observable<U, V>;
+    flatMapLatest<U, V>(fn: (value: T) => Observable<U, V>): Observable<U, V>;
+    flatMapFirst<U, V>(fn: (value: T) => Observable<U, V>): Observable<U, V>;
+    flatMapConcat<U, V>(fn: (value: T) => Observable<U, V>): Observable<U, V>;
+    flatMapConcurLimit<U, V>(fn: (value: T) => Observable<U, V>, limit: number): Observable<U, V>;
+    flatMapErrors<U, V>(transform: (error: S) => Observable<U, V>): Observable<U, V>;
 
     // Combine two properties
     filterBy<U>(otherObs: Observable<boolean, U>): Observable<T, S>;
@@ -90,6 +91,7 @@ declare module "kefir" {
     skipDuplicates(comparator?: (a: T, b: T) => boolean): Stream<T, S>;
     diff(fn?: (prev: T, next: T) => T, seed?: T): Stream<T, S>;
     scan(fn: (prev: T, next: T) => T, seed?: T): Stream<T, S>;
+    flatten<U>(transformer?: (value: T) => U[]): Stream<U, S>;
     delay(wait: number): Stream<T, S>;
     throttle(wait: number, options?: {leading?: boolean, trailing?: boolean}): Stream<T, S>;
     debounce(wait: number, options?: {immediate: boolean}): Stream<T, S>;
@@ -146,6 +148,7 @@ declare module "kefir" {
     skipDuplicates(comparator?: (a: T, b: T) => boolean): Property<T, S>;
     diff(fn?: (prev: T, next: T) => T, seed?: T): Property<T, S>;
     scan(fn: (prev: T, next: T) => T, seed?: T): Property<T, S>;
+    flatten<U>(transformer?: (value: T) => U[]): Property<U, S>;
     delay(wait: number): Property<T, S>;
     throttle(wait: number, options?: {leading?: boolean, trailing?: boolean}): Property<T, S>;
     debounce(wait: number, options?: {immediate: boolean}): Property<T, S>;
