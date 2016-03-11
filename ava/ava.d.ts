@@ -1,3 +1,4 @@
+declare module 'ava' {
 export interface Observable {
         subscribe(observer: (value: {}) => void): any; // bouzuya changed
 }
@@ -163,5 +164,6 @@ export interface ContextualTestContext extends TestContext {
 }
 export interface ContextualCallbackTestContext extends CallbackTestContext {
         context: any;
+}
 }
 
